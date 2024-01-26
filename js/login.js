@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331-33.xyz/';
+const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId=0;
@@ -14,7 +14,7 @@ function doLogin() {
     let tmp = {login:login, password:password};
 
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + "/login." + extension;
+    let url = urlBase + "/Login." + extension;
     console.log("sending login request from "+login+ " to "+url);
 
     let xhr = new XMLHttpRequest();
