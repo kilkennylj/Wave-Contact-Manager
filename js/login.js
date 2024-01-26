@@ -7,7 +7,6 @@ let userName='';
 function doLogin() {
     
     document.getElementById("loginResult").innerHTML = "Logging in...";
-    window.location.href = "landing.html";
 
     let login = document.getElementById("username").value;
     let password = document.getElementById("password").value;
@@ -15,7 +14,7 @@ function doLogin() {
     let tmp = {login:login, password:password};
 
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + "/login" + extension;
+    let url = urlBase + "/login." + extension;
     console.log("sending login request from "+login+ " to "+url);
 
     let xhr = new XMLHttpRequest();
