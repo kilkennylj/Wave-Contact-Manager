@@ -15,12 +15,29 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES(?,?,?,?,?)");
-		$stmt->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
+		$sql = "SELECT * FROM Contacts WHERE UserID = ? AND Phone = ? or Email = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("sss", $userId, $phoneNumber, $emailAddress);
 		$stmt->execute();
-		$stmt->close();
-		$conn->close();
-		returnWithError("");
+		$result = $stmt->get_result();
+		$rows = mysqli_num_rows($result):
+
+		if($rows == 0){
+			$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES(?,?,?,?,?)");
+			$stmt->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
+			$stmt->execute();
+			
+			if($result->getresult()){
+				returnWithInfo("Successfully Added Contact");
+			}else{
+				returnWithError("Failed to Add Contact");
+			}
+
+			$stmt->close();
+			$conn->close();
+		}else{
+			returnWithError("Phone or Email already added to Contacts");
+		}
 	}
 
 	function getRequestInfo()
