@@ -1,6 +1,6 @@
 <?php
 
-
+$inData = getRequestInfo();
 // Create connection
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
 // Check connection
