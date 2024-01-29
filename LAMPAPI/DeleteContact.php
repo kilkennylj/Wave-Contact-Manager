@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 }
 
 // sql to delete a record
-$sql = "DELETE FROM MyGuests WHERE id=3";
+$sql = "DELETE FROM Contacts WHERE id=3";
 
 if ($conn->query($sql) === TRUE) {
   echo "Record deleted successfully";
