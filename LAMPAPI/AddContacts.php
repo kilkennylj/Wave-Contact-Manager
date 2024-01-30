@@ -1,11 +1,11 @@
 <?php
 	$inData = getRequestInfo();
 	
-  	$firstName = $inData["FirstName"];
-  	$lastName = $inData["LastName"];
-  	$phoneNumber = $inData["Phone"];
-  	$emailAddress = $inData["Email"];
-  	$userId = $inData["UserID"];
+  	$firstName = $inData["firstName"];
+  	$lastName = $inData["lastName"];
+  	$phoneNumber = $inData["phone"];
+  	$emailAddress = $inData["email"];
+  	$userId = $inData["userID"];
 
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
@@ -15,29 +15,12 @@
 	} 
 	else
 	{
-		$sql = "SELECT * FROM Contacts WHERE UserID = ? AND Phone = ? or Email = ?";
-		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("sss", $userId, $phoneNumber, $emailAddress);
+		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES(?,?,?,?,?)");
+		$stmt->bind_param("ssisi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
 		$stmt->execute();
-		$result = $stmt->get_result();
-		$rows = mysqli_num_rows($result):
-
-		if($rows == 0){
-			$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES(?,?,?,?,?)");
-			$stmt->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
-			$stmt->execute();
-			
-			if($result->getresult()){
-				returnWithInfo("Successfully Added Contact");
-			}else{
-				returnWithError("Failed to Add Contact");
-			}
-
-			$stmt->close();
-			$conn->close();
-		}else{
-			returnWithError("Phone or Email already added to Contacts");
-		}
+		$stmt->close();
+		$conn->close();
+		returnWithError("");
 	}
 
 	function getRequestInfo()
