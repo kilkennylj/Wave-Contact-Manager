@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
+    <script type="text/javascript" src="register.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form action="register.php" method="post">
+            <h2>Register</h2> <!--Title-->
+            <label for="fname-field"> <!--First-->
+                <span>First name:</span>
+                <input type="text" id="fname" name="fname" placeholder="Your first name..." required>
+            </label>
+            <label for="lname-field"> <!--Last-->
+                <span>Last name:</span>
+                <input type="text" id="lname" name="lname" placeholder="Your last name..." required>
+            </label>
+            <!-- <label for="phone-field">
+                <span>Phone:</span>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="123-456-7890" required>
+            </label>
+            <label for="email-field">
+                <span>Email:</span>
+                <input type="email" id="email" name="email" placeholder="Someone@example.com" required>
+            </label> -->
+            <label for="uname-field"> <!--Username-->
+                <span>Username:</span>
+                <input type="text" id="uname" name="uname" placeholder="Your username..." required>
+            </label>
+            <label for="pword-field"> <!--Password-->
+                <span>Password:</span>
+                <input type="password" id="pword" name="pword" placeholder="Your password..." required>
+            </label>
+            <button type="button" id="registerbutton" onclick="doRegister();">Submit</button> <!--Button-->
+            <span id="registerresult"></span>
+        </form>
+    </div>
+</body>
+</html>
