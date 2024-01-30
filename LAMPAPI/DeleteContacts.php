@@ -1,21 +1,42 @@
 <?php
 
-$inData = getRequestInfo();
-// Create connection
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+	$inData = getRequestInfo();
 
-// sql to delete a record
-$sql = "DELETE FROM Contacts WHERE id=3";
+	$id = $inData["id"];
 
-if ($conn->query($sql) === TRUE) {
-  echo "Record deleted successfully";
-} else {
-  echo "Error deleting record: " . $conn->error;
-}
+	// Create connection
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
+	// Check connection
+	if ($conn->connect_error)
+	{
+	    returnWithError( $conn->connect_error );
+	}
 
-$conn->close();
+	else
+	{
+	    $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ?");
+    	$stmt->bind_param("i", $Id);
+	    $stmt->execute();
+	    $stmt->close();
+	    $conn->close();
+	    returnWithError("");
+	}
+
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
+
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+
+	function returnWithError( $err )
+	{
+		$retValue = '{"error":"' . $err . '"}';
+  		sendResultInfoAsJson( $retValue );
+	}
+
 ?>
