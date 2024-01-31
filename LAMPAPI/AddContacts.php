@@ -1,11 +1,11 @@
 <?php
 	$inData = getRequestInfo();
 	
-  	$firstName = $inData["FirstName"];
-  	$lastName = $inData["LastName"];
-  	$phoneNumber = $inData["Phone"];
-  	$emailAddress = $inData["Email"];
-  	$userId = $inData["UserID"];
+  	$firstName = $inData["firstName"];
+  	$lastName = $inData["lastName"];
+  	$phoneNumber = $inData["phone"];
+  	$emailAddress = $inData["email"];
+  	$userId = $inData["userID"];
 
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
@@ -16,7 +16,7 @@
 	else
 	{
 		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES(?,?,?,?,?)");
-		$stmt->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
+		$stmt->bind_param("ssisi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
