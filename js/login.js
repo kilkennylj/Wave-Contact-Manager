@@ -46,3 +46,7 @@ function doLogin() {
         document.getElementById("loginResult").innerHTML = err.message;
     }
 }
+
+function sendToRegister() {
+    window.location.href = "register.html";
+}
