@@ -2,27 +2,21 @@ const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
-let firstName = "";
-let lastName = "";
 
 function doRegister()
 {
-	userId = 0;
-	firstName = "";
-	lastName = "";
-	
-	let fname = document.getElementById("fname").value;
-	let lname = document.getElementById("lname").value;
-	let uname = document.getElementById("uname").value;
-	let pword = document.getElementById("pword").value;
+	let firstName = document.getElementById("fname").value;
+	let lastName = document.getElementById("lname").value;
+	let login = document.getElementById("uname").value;
+	let password = document.getElementById("pword").value;
 	
 	document.getElementById("registerresult").innerHTML = "";
 
-	let tmp = {fname:fname,lname:lname,uname:uname,pword:pword};
+	let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
 	let jsonPayload = JSON.stringify( tmp );
 	
 	let url = urlBase + '/Register.' + extension;
-	console.log("Sending registration data from "+uname+" to "+url);
+	console.log("Sending registration data from "+login+" to "+url);
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -41,9 +35,6 @@ function doRegister()
 					document.getElementById("registerresult").innerHTML = "User account already exists";
 					return;
 				}
-		
-				// firstName = jsonObject.firstName;
-				// lastName = jsonObject.lastName;
 	
 				window.location.href = "index.html";
 			}
