@@ -13,6 +13,7 @@ body
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background: url('images/background.gif') center/cover no-repeat fixed;
 }
 
 /* Wrapper */
@@ -32,7 +33,10 @@ h2
     display: flex;
     justify-content: center;
     padding-bottom: 20px;
-    font-family: 'Roboto';
+    font-size: 32px;
+    font-family: 'Dancing Script';
+    font-weight: bolder;
+    color: #263dd3;
 }
 
 span
@@ -54,7 +58,7 @@ input
 {
     height: 30px;
     outline: none;
-    border: 1px solid #84c6bd;
+    border: 1px solid #000000;
     border-radius: 4px;
     padding: 7px;
 }
@@ -75,6 +79,7 @@ button
     cursor: pointer;
     color: white;
     background-color: #263dd3;
+    margin: 4px;
 }
 
 button:hover

@@ -1,71 +1,19 @@
 <html>
     <head>
-        <title>Login</title>
         <style>
-            main {
-                align-content: center;
+            #sendRegister {
+                background: #f18f01;
+                color: white;
             }
 
-            body {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-                margin: 0;
-                padding: 0;
-                background: url('background.gif') center/cover no-repeat fixed;
-            }
-
-            .form {
-                background-color: #f2f2f2;
-                width: 350px;
-                padding: 20px;
-                border-radius: 8px;
-            }
-
-            .form label {
-                margin-bottom: 5px;
-                color: #000000;
-                display: flex;
-                align-items: center;
-                font-weight: bold;
-                font-family: 'Roboto';
-            }
-
-            .form label span {
-                margin-right: 3%;
-            }
-
-            .form h2 {
-                text-align: center;
-                font-size: 32px;
-                font-family: 'Dancing Script';
-                color: #263dd3;
-            }
-
-            .form input {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-                border: 1px solid #84c6bd;
-                border-radius: 4px;
-            }
-
-            .form button {
-                width: 100%;
-                padding: 10px;
-                background-color: #263dd3;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            .form button:hover {
-                background-color: #394abd;
+            #sendRegister:hover {
+                background: #e68e0b;
             }
         </style>
+        <title>Welcome to Wave</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
         <script type="text/javascript" src="login.js"></script>
@@ -73,7 +21,7 @@
 
     <body>
         <main>
-            <div class="form">
+            <div class="container">
                 <form id="login-form">
                     <h2>Wave</h2>
                     <label for="username">
@@ -85,6 +33,7 @@
                         <input type="password" id="password" name="password" placeholder="Your password..." required />
                     </label>
                     <button id="loginbtn" type="button" onclick="doLogin()">Login</button>
+                    <button id="sendRegister" type="button" onclick="sendToRegister()">Register</button>
                     <span id="loginResult"></span>
                 </form>
             </div>
