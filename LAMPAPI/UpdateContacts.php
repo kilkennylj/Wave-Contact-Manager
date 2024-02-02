@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE ID = ?");
     
     // Bind parameters
-    $stmt->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $emailAddress, $id);
+    $stmt->bind_param("ssisi", $firstName, $lastName, $phoneNumber, $emailAddress, $id);
     
     // Execute query
     $stmt->execute();
