@@ -1,22 +1,65 @@
 <html>
     <head>
-        <title>Wave</title>
+        <title>Surf the Wave</title>
+        <style>
+            body
+            {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+            h1
+            {
+                display: flex;
+                justify-content: center;
+                padding-bottom: 20px;
+                font-size: 52px;
+                font-family: 'Dancing Script';
+                font-weight: bolder;
+                color: #263dd3;
+            }
+            .container
+            {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
     </head>
     <body>
         <main>
-            <h1>You were logged in. WIP.</h1>
-            <div class="searchBar">
+            <h1>Wave</h1>
+            <div class="container" id="searchDiv">
                 <input  type="text" id="searchQuery" placeholder="Search by... (?)">
             </div>
-            <div class="tableDiv">
+            <div class="container">
                 <table>
                     <tr id="headRow">
                         <th id="headFName">First Name</th>
                         <th id="headLName">Last Name</th>
                         <th id="headPhone">Phone</th>
                         <th id="headEmail">Email</th>
+                        <th id="headButtons"></th>
+                    </tr>
+                    <tr id="testRow">
+                        <td id="testFName" type="text">John</td>
+                        <td id="testLName" type="text">Doe</td>
+                        <td id="testPhone" type="Phone">123-456-7890</td>
+                        <td id="testEmail" type="Email">john.doe@mail.com</td>
+                        <td id="testButton" type="button">
+                            <button>Edit</button>
+                            <button>X</button>
+                        </td>
                     </tr>
                 </table>
+            </div>
+            <div class="container">
+                <button>Add</button>
+                <button>Log Out</button>
             </div>
         </main>
     </body>
