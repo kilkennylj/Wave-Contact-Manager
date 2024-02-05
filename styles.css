@@ -17,7 +17,6 @@ body
 }
 
 /* Wrapper */
-
 .container
 {
     display: flex;
@@ -69,6 +68,42 @@ input:focus
     transition: 0.1s linear;
 }
 
+/* Password Requirements */
+#password-require
+{
+    padding-left: 5px;
+    padding-bottom: 10px;
+    font-family: 'Roboto';
+}
+
+h4
+{
+    padding-bottom: 5px;
+}
+
+.valid
+{
+    color: green;
+}
+
+.valid:before
+{
+    padding-right: 10px;
+    content: "✔";
+}
+
+.invalid
+{
+    color: red;
+}
+
+.invalid:before
+{
+    padding-right: 10px;
+    content: "✖";
+}
+
+/* Button */
 button
 {
     width: 100%;

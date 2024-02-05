@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
-    <script type="text/javascript" src="js/register.js"></script>
 </head>
 <body>
     <div class="container">
@@ -35,11 +34,20 @@
             </label>
             <label for="pword-field"> <!--Password-->
                 <span>Password:</span>
-                <input type="password" id="pword" name="pword" placeholder="Your password..." required>
+                <input type="password" id="pword" name="pword" placeholder="Your password..." title="Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and 8 characters." required>
             </label>
-            <button type="button" id="registerbutton" onclick="doRegister();">Submit</button> <!--Button-->
+            <div id="password-require"> <!--Password Requirements-->
+                <h4>Password Must Contain:</h4>
+                <p class="password-require-item invalid">At least 1 uppercase letter</p>
+                <p class="password-require-item invalid">At least 1 lowercase letter</p>
+                <p class="password-require-item invalid">At least 1 number</p>
+                <p class="password-require-item invalid">At least 1 special character</p>
+                <p class="password-require-item invalid">At least 8 characters</p>
+            </div>
+            <button type="button" id="registerbutton" onclick="doValidate();">Submit</button> <!--Button-->
             <span id="registerresult"></span>
         </form>
+        <script type="text/javascript" src="js/register.js"></script>
     </div>
 </body>
 </html>
