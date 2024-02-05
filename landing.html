@@ -50,7 +50,7 @@
                 padding: 20px;
                 border-radius: 8px;
             }
-            tbody 
+            tbody, thead
             {
                 display: table-row-group;
                 vertical-align: middle;
@@ -87,6 +87,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
+        <script type="text/javascript" src="js/login.js"></script>
     </head>
     <body>
         <main>
@@ -97,7 +98,7 @@
             <br>
             <div class="container table">
                 <table class="contactTable" id="contactTable">
-                    <tbody>
+                    <thead>
                         <tr class="headRow" id="headRow">
                             <th class="headFName" id="headFName">First Name</th>
                             <th class="headLName" id="headLName">Last Name</th>
@@ -105,14 +106,16 @@
                             <th class="headEmail" id="headEmail">Email</th>
                             <th class="headButtons" id="headButtons"></th>
                         </tr>
-                        <tr id="testRow">
-                            <td id="testFName" type="text">John</td>
-                            <td id="testLName" type="text">Doe</td>
-                            <td id="testPhone" type="Phone">123-456-7890</td>
-                            <td id="testEmail" type="Email">john.doe@mail.com</td>
-                            <td id="testButton" type="button">
-                                <button>Edit</button>
-                                <button>Delete</button>
+                    </thead>
+                    <tbody id="tableBody" class="tableBody">
+                        <tr>
+                            <td class="fName" id="fName" type="text">John</td>
+                            <td class="lName" id="lName" type="text">Doe</td>
+                            <td class="phone" id="phone" type="Phone">123-456-7890</td>
+                            <td class="email" id="email" type="Email">john.doe@mail.com</td>
+                            <td class="button" id="button" type="button">
+                                <button class="editBtn" id="editBtn">Edit</button>
+                                <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -120,7 +123,7 @@
             </div>
             <br>
             <div class="bottom">
-                <button>Add</button>
+                <button id="addBtn" onclick="createRow()">Add</button>
                 <button>Log Out</button>
             </div>
         </main>
