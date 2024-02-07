@@ -157,3 +157,54 @@ function editUser(button)
                     </td> 
                     `;
 }
+
+// NOTE: need to add pop up window that says are you sure.
+function deleteUser (button)
+{
+    let thisRow = button.closest("tr");
+    let firstName = thisRow.getElementById("fName").value;
+    let lastName = thisRow.getElementById("lName").value;
+    let userID = userId;
+
+    let tmp = 
+    {
+        firstName : firstName,
+        lastName : lastName,
+        userID : userID
+    }
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    if (request == "Delete")
+    {
+        let url = urlBase + "/DeleteContacts." + extension;
+        let xhr = new XMLHttpRequest(POST, url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+        try
+        {
+            xhr.onreadystatechange = function()
+            {
+                // not sure about this at all
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    thisRow.innerhtml = `
+                    <td class="fName" id="fName">${firstName}</td>
+                    <td class="lName" id="lName">${lastName}</td>
+                    <td class="userId" id="userId">${userID}</td>}`;
+                }
+            };
+            xhr.send(jsonPayload);
+        }
+
+        catch(err)
+        {
+            // display error
+        }
+    }
+
+    else
+    {
+        // not sure at all
+    }
+}
