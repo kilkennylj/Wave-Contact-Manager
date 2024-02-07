@@ -62,7 +62,7 @@ function createRow()
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
-                <button class="saveBtn" id="saveBtn" onclick="saveUser(this)>Save</button>
+                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, "SaveEdit")>Save</button>
                 <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
             </td> 
         `;
@@ -74,7 +74,7 @@ function deleteRow(button)
     button.closest("tr").remove();
 }
 
-function saveUser(button)
+function saveUser(button, request)
 {
     let thisRow = button.closest("tr");
     let FirstName = thisRow.getElementById("fName").value;  //Get value from the columns
@@ -95,11 +95,46 @@ function saveUser(button)
 
     let jsonPayload = JSON.stringify(tmp);
 
-    //IF add,
-    
-    //ELSE IF edit
+    //Saving edits to existing user
+    if(request === "SaveEdit")
+    {
+        let url = urlBase + "/UpdateContacts." + extension;
+        let xhr = new XMLHttpRequest(POST, url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try
+        {
+            xhr.onreadystatechange = function()
+            {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                    thisRow.innerHTML = `
+                    <td class="fName" id="fName">`+FirstName+`</td>
+                    <td class="lName" id="lName">`+LastName+`</td>
+                    <td class="phone" id="phone">`+Phone+`</td>
+                    <td class="email" id="email">`+Email+`</td>
+                    <td class="button" id="button" type="button">
+                        <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
+                        <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
+                    </td> 
+                    `;
+                }
+            };
+            xhr.send(jsonPayload);
+        }
+        catch(err)
+        {
+            //Display error on a span ?
+        }
+    }
+    else
+    {
+        //Saving a brand new user
+    }
 
-    //ELSE error
+}
 
+//Changes text fields to be editable and sets Save button
+function editUser(button)
+{
 
 }
