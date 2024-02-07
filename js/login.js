@@ -69,11 +69,6 @@ function createRow()
         document.getElementById("tableBody").appendChild(newRow);
 }
 
-function deleteRow(button)
-{
-    button.closest("tr").remove();
-}
-
 function saveUser(button, request)
 {
     let thisRow = button.closest("tr");
@@ -124,7 +119,7 @@ function saveUser(button, request)
                 <td class="email" id="email">`+Email+`</td>
                 <td class="button" id="button" type="button">
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
-                    <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
+                    <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
                 </td> 
                 `;
             }
@@ -174,37 +169,27 @@ function deleteUser (button)
     }
 
     let jsonPayload = JSON.stringify(tmp);
-
-    if (request == "Delete")
+    let url = urlBase + "/DeleteContacts." + extension;
+    let xhr = new XMLHttpRequest(POST, url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
     {
-        let url = urlBase + "/DeleteContacts." + extension;
-        let xhr = new XMLHttpRequest(POST, url, true);
-        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-        try
+        xhr.onreadystatechange = function()
         {
-            xhr.onreadystatechange = function()
+            if (this.readyState == 4 && this.status == 200)
             {
-                // not sure about this at all
-                if (this.readyState == 4 && this.status == 200)
-                {
-                    thisRow.innerhtml = `
-                    <td class="fName" id="fName">${firstName}</td>
-                    <td class="lName" id="lName">${lastName}</td>
-                    <td class="userId" id="userId">${userID}</td>}`;
-                }
-            };
-            xhr.send(jsonPayload);
-        }
-
-        catch(err)
-        {
-            // display error
-        }
+                deleteRow(button);
+            }
+        };
+        xhr.send(jsonPayload);
     }
-
-    else
+    catch(err)
     {
-        // not sure at all
+        console.log(err);
     }
+}
+
+function deleteRow(button)
+{
+    button.closest("tr").remove();
 }
