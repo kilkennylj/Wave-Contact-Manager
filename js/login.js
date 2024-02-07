@@ -51,6 +51,8 @@ function sendToRegister() {
     window.location.href = "register.html";
 }
 
+// Separate into a new file when done. Need to work out ID first
+
 function createRow()
 {
     let newRow = document.createElement('tr');
@@ -60,7 +62,7 @@ function createRow()
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
-                <button class="editBtn" id="saveBtn">Save</button>
+                <button class="saveBtn" id="saveBtn" onclick="saveUser(this)>Save</button>
                 <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
             </td> 
         `;
@@ -70,4 +72,34 @@ function createRow()
 function deleteRow(button)
 {
     button.closest("tr").remove();
+}
+
+function saveUser(button)
+{
+    let thisRow = button.closest("tr");
+    let FirstName = thisRow.getElementById("fName").value;  //Get value from the columns
+    let LastName = thisRow.getElementById("lName").value;
+    let Phone = thisRow.getElementById("phone").value;
+    let Email = thisRow.getElementById("email").value;
+    let UserID = userId; //Set on login. Might not work needs fixing/testing
+
+    //Preparing for API
+
+    let tmp = {
+        FirstName:FirstName,
+        LastName:LastName,
+        Phone:Phone,
+        Email:Email,
+        UserID:UserID //Testing needs to be done here, not sure if it works
+    }
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    //IF add,
+    
+    //ELSE IF edit
+
+    //ELSE error
+
+
 }
