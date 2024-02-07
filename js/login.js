@@ -62,8 +62,8 @@ function createRow()
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
-                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, "SaveEdit")>Save</button>
-                <button class="delBtn" id="delBtn" onclick="deleteRow(this)">Delete</button>
+                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, "SaveNew")>Save</button>
+                <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelNew")">Cancel</button>
             </td> 
         `;
         document.getElementById("tableBody").appendChild(newRow);
@@ -152,8 +152,8 @@ function editUser(button)
                     <td class="phone" id="phone" contenteditable="true">`+Phone+`</td>
                     <td class="email" id="email" contenteditable="true">`+Email+`</td>
                     <td class="button" id="button" type="button">
-                        <button class="editBtn" id="editBtn" onclick="saveUser(this, "SaveEdit")">Edit</button>
-                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this)">Cancel</button>
+                        <button class="editBtn" id="editBtn" onclick="saveUser(this, "SaveEdit")">Save</button>
+                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelExisting")">Cancel</button>
                     </td> 
                     `;
 }
