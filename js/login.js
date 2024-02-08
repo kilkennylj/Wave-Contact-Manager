@@ -97,14 +97,14 @@ function saveUser(button, request)
     }
     else if(request === "SaveNew")
     {
-        url = urlBase + "/AddContacts.php" + extension;
+        url = urlBase + "/AddContacts." + extension;
     }
     else
     {
         console.log("HTML ERROR: Invalid or No request given to save function");
         return;
     }
-    let xhr = new XMLHttpRequest(POST, url, true);
+    let xhr = new XMLHttpRequest("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try
     {
@@ -148,7 +148,7 @@ function editUser(button)
                     <td class="email" id="email" contenteditable="true">`+Email+`</td>
                     <td class="button" id="button" type="button">
                         <button class="editBtn" id="editBtn" onclick="saveUser(this, "SaveEdit")">Save</button>
-                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelExisting")">Cancel</button>
+                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelExists")">Cancel</button>
                     </td> 
                     `;
 }
@@ -170,7 +170,7 @@ function deleteUser (button)
 
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + "/DeleteContacts." + extension;
-    let xhr = new XMLHttpRequest(POST, url, true);
+    let xhr = new XMLHttpRequest("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try
     {
@@ -192,4 +192,34 @@ function deleteUser (button)
 function deleteRow(button)
 {
     button.closest("tr").remove();
+}
+
+function cancelEdit(button, request)
+{
+    let thisRow = button.closest("tr");
+    if(request === "CancelNew")
+    {
+        thisRow.remove();
+    }
+    else if(request === "CancelExists")
+    {
+        let FirstName = thisRow.getElementById("fName").value;  //Save value of columns
+        let LastName = thisRow.getElementById("lName").value;
+        let Phone = thisRow.getElementById("phone").value;
+        let Email = thisRow.getElementById("email").value;
+        thisRow.innerHTML = `
+                <td class="fName" id="fName">`+FirstName+`</td>
+                <td class="lName" id="lName">`+LastName+`</td>
+                <td class="phone" id="phone">`+Phone+`</td>
+                <td class="email" id="email">`+Email+`</td>
+                <td class="button" id="button" type="button">
+                    <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
+                    <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
+                </td> 
+                `;
+    }
+    else
+    {
+        console.log("HTML ERROR: Invalid or no request given to function");
+    }
 }
