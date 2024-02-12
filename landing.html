@@ -93,7 +93,7 @@
         <main>
             <h1>Wave</h1>
             <div class="search">
-                <input  type="text" id="searchQuery" placeholder="Search by... (?)">
+                <input  type="text" id="searchQuery" class="searchQuery" oninput="searchContacts()" placeholder="Search by your contacts">
             </div>
             <br>
             <div class="container table">
@@ -124,7 +124,7 @@
             <br>
             <div class="bottom">
                 <button id="addBtn" onclick="createRow()">Add</button>
-                <button>Log Out</button>
+                <button onclick="logout()">Log Out</button>
             </div>
         </main>
     </body>

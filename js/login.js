@@ -2,7 +2,6 @@ const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId=0;
-let userName='';
 
 function doLogin() {
     
@@ -62,8 +61,8 @@ function createRow()
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
-                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, "SaveNew")>Save</button>
-                <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelNew")">Cancel</button>
+                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, 'SaveNew')">Save</button>
+                <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelNew')">Cancel</button>
             </td> 
         `;
         document.getElementById("tableBody").appendChild(newRow);
@@ -72,10 +71,11 @@ function createRow()
 function saveUser(button, request)
 {
     let thisRow = button.closest("tr");
-    let FirstName = thisRow.getElementById("fName").value;  //Get value from the columns
-    let LastName = thisRow.getElementById("lName").value;
-    let Phone = thisRow.getElementById("phone").value;
-    let Email = thisRow.getElementById("email").value;
+    let tableCells = thisRow.getElementsByTagName("td");
+    let FirstName = tableCells[0].innerText;  //Get value of columns
+    let LastName = tableCells[1].innerText;
+    let Phone = tableCells[2].innerText;
+    let Email = tableCells[3].innerText;
     let UserID = userId; //Set on login. Might not work needs fixing/testing
 
     //Preparing for API
@@ -136,10 +136,11 @@ function saveUser(button, request)
 function editUser(button)
 {
     let thisRow = button.closest("tr");
-    let FirstName = thisRow.getElementById("fName").value;  //Save value of columns
-    let LastName = thisRow.getElementById("lName").value;
-    let Phone = thisRow.getElementById("phone").value;
-    let Email = thisRow.getElementById("email").value;
+    let tableCells = thisRow.getElementsByTagName("td");
+    let FirstName = tableCells[0].innerText;  //Save value of columns
+    let LastName = tableCells[1].innerText;
+    let Phone = tableCells[2].innerText;
+    let Email = tableCells[3].innerText;
 
     thisRow.innerHTML = `
                     <td class="fName" id="fName" contenteditable="true">`+FirstName+`</td>
@@ -147,8 +148,8 @@ function editUser(button)
                     <td class="phone" id="phone" contenteditable="true">`+Phone+`</td>
                     <td class="email" id="email" contenteditable="true">`+Email+`</td>
                     <td class="button" id="button" type="button">
-                        <button class="editBtn" id="editBtn" onclick="saveUser(this, "SaveEdit")">Save</button>
-                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, "CancelExists")">Cancel</button>
+                        <button class="editBtn" id="editBtn" onclick="saveUser(this, 'SaveEdit')">Save</button>
+                        <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelExists')">Cancel</button>
                     </td> 
                     `;
 }
@@ -157,8 +158,9 @@ function editUser(button)
 function deleteUser (button)
 {
     let thisRow = button.closest("tr");
-    let firstName = thisRow.getElementById("fName").value;
-    let lastName = thisRow.getElementById("lName").value;
+    let tableCells = thisRow.getElementsByTagName("td");
+    let firstName = tableCells[0].innerText;
+    let lastName = tableCells[1].innerText;
     let userID = userId;
 
     let tmp = 
@@ -203,10 +205,11 @@ function cancelEdit(button, request)
     }
     else if(request === "CancelExists")
     {
-        let FirstName = thisRow.getElementById("fName").value;  //Save value of columns
-        let LastName = thisRow.getElementById("lName").value;
-        let Phone = thisRow.getElementById("phone").value;
-        let Email = thisRow.getElementById("email").value;
+        let tableCells = thisRow.getElementsByTagName("td");
+        let FirstName = tableCells[0].innerText;  //Save value of columns
+        let LastName = tableCells[1].innerText;
+        let Phone = tableCells[2].innerText;
+        let Email = tableCells[3].innerText;
         thisRow.innerHTML = `
                 <td class="fName" id="fName">`+FirstName+`</td>
                 <td class="lName" id="lName">`+LastName+`</td>
@@ -222,4 +225,63 @@ function cancelEdit(button, request)
     {
         console.log("HTML ERROR: Invalid or no request given to function");
     }
+}
+
+function searchContacts()
+{
+    let Search = document.getElementById("searchQuery").value;
+    let userID = userId;
+
+    let tmp = {Search : Search, userID : userID};
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/SearchContacts.' + extension;
+    let xhr = new XMLHttpRequest;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+        xhr.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                let jsonObject = JSON.parse(xhr.responseText);
+                updateTable(jsonObject);
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
+function updateTable(data)
+{
+    let table = document.getElementById("contactTable");
+    let tbody = table.getElementsByTagName("tbody");
+    tbody.innerHTML = ""; //Clear table
+
+    data.array.forEach(item => {
+        let row = document.createElement("tr");
+        let keys = Object.keys(item);
+        for(var i = 0; i < keys.length - 1; i++)
+        {
+            let cell = document.createElement("td");
+            cell.textContent = item[keys[i]];
+            row.appendChild(cell);
+        }
+        let buttonCell = document.createElement("td");
+        buttonCell.innerHTML = `<button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
+            <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>`;
+        row.appendChild(buttonCell);
+        tableBody.appendChild(row);
+    });
+}
+
+function logout()
+{
+    userId = 0;
+    window.location.href = "index.html"
 }
