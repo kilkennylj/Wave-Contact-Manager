@@ -4,7 +4,7 @@
 
 	$firstName = $inData["firstName"];
 	$lastName = $inData["lastName"];
-	$userID = $inData["userId"];
+	$userID = $inData["UserId"];
 
 	// Create connection
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
