@@ -3,7 +3,7 @@
 $inData = getRequestInfo();
 
 // Extracting data from the input
-$id = $inData["UserID"];
+$userId = $inData["UserId"];
 $firstName = $inData["FirstName"];
 $lastName = $inData["LastName"];
 $phoneNumber = $inData["Phone"];
@@ -17,10 +17,10 @@ if ($conn->connect_error) {
     returnWithError($conn->connect_error);
 } else {
     // Update query
-    $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE ID = ?");
+    $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE UserID = ?");
     
     // Bind parameters
-    $stmt->bind_param("ssisi", $firstName, $lastName, $phoneNumber, $emailAddress, $id);
+    $stmt->bind_param("ssisi", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
     
     // Execute query
     $stmt->execute();
