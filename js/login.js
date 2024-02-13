@@ -99,7 +99,7 @@ function getContactID(LastName) {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
-                contactID = jsonObject[0].ID;
+                contactID = jsonObject[0]["ID"];
             }
         };
         xhr.send(jsonPayload);
@@ -124,7 +124,7 @@ function saveUser(button, request) {
     //Saving edits to existing user
     if (request === "SaveEdit") {
         url = urlBase + "/UpdateContacts." + extension;
-        let ID = parseInt(getContactID(LastName));
+        let ID = parseInt(getContactID(lastName));
         tmp = {
             ID: ID,
             FirstName: firstName,
