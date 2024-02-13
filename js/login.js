@@ -313,5 +313,6 @@ function updateTable(data) {
 
 function logout() {
     UserID_Global = 0;
+    document.cookie = "UserID_Global = 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href = "index.html"
 }
