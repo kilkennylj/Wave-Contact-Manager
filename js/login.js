@@ -1,7 +1,16 @@
 const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
-let UserID_Global = 0;
+let UserID_Global;
+
+let cookies = document.cookie.split(";");
+for(let cookie of cookies) {
+    let parts = cookie.split("=");
+    if (parts[0].trim() === "userID_Global") {
+        UserID_Global = parts[1];
+        break;
+    }
+}
 
 function doLogin() {
 
@@ -33,6 +42,8 @@ function doLogin() {
                     return;
                 }
 
+                saveCookie();
+
                 window.location.href = "landing.html";
             }
         };
@@ -45,6 +56,14 @@ function doLogin() {
 
 function sendToRegister() {
     window.location.href = "register.html";
+}
+
+function saveCookie()
+{
+	let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+	document.cookie = "userID_Global=" + UserID_Global + ";expires=" + date.toGMTString() + ";path=/; cop4331-33.xyz";
 }
 
 // Separate into a new file when done. Need to work out ID first
@@ -107,11 +126,11 @@ function saveUser(button, request) {
         url = urlBase + "/UpdateContacts." + extension;
         let ID = parseInt(getContactID(LastName));
         tmp = {
+            ID: ID,
             FirstName: firstName,
             LastName: lastName,
             Phone: phone,
-            Email: email,
-            ID: ID
+            Email: email
         }
     }
     else if (request === "SaveNew") {
@@ -190,7 +209,7 @@ function deleteUser(button) {
         {
             firstName: firstName,
             lastName: lastName,
-            UserID: UserID
+            UserId: UserID
         }
 
         let jsonPayload = JSON.stringify(tmp);
@@ -250,7 +269,7 @@ function searchContacts() {
     let Search = document.getElementById("searchQuery").value;
     let UserID = UserID_Global;
 
-    let tmp = { UserId: UserId, Search: Search };
+    let tmp = { UserId: UserID, search: Search };
     let jsonPayload = JSON.stringify(tmp);
 
     let url = urlBase + '/SearchContacts.' + extension;
