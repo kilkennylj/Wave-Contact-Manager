@@ -78,6 +78,7 @@ function getContactID(LastName)
     let jsonPayload = JSON.stringify(tmp);
 
     let xhr = new XMLHttpRequest("POST", url, true);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     let contactID;
     try
@@ -144,6 +145,7 @@ function saveUser(button, request)
 
     let jsonPayload = JSON.stringify(tmp);
     let xhr = new XMLHttpRequest("POST", url, true);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try
     {
@@ -214,6 +216,7 @@ function deleteUser (button)
         let jsonPayload = JSON.stringify(tmp);
         let url = urlBase + "/DeleteContacts." + extension;
         let xhr = new XMLHttpRequest("POST", url, true);
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         try
         {
