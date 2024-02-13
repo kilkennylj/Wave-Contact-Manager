@@ -21,7 +21,7 @@ body
 {
     display: flex;
     justify-content: center;
-    width: 400px;
+    width: 450px;
     padding: 20px;
     border-radius: 8px;
     background-color: #f2f2f2;
@@ -32,7 +32,7 @@ h2
     display: flex;
     justify-content: center;
     padding-bottom: 20px;
-    font-size: 32px;
+    font-size: 40px;
     font-family: 'Dancing Script';
     font-weight: bolder;
     color: #263dd3;
@@ -55,11 +55,12 @@ label
 
 input
 {
-    height: 30px;
+    height: 40px;
     outline: none;
     border: 1px solid #000000;
     border-radius: 4px;
-    padding: 7px;
+    padding: 10px;
+    font-size: 15px;
 }
 
 input:focus
