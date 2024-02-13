@@ -3,8 +3,19 @@ const extension = 'php';
 
 let userId = 0;
 var passwordInput = document.getElementById("pword");
+var passwordRequire = document.getElementById("password-require");
 var passwordRequireItems = document.getElementsByClassName("password-require-item");
 var satisfy = 0;
+
+passwordInput.onfocus = function()
+{
+	passwordRequire.style.display = "block";
+}
+
+passwordInput.onblur = function()
+{
+	passwordRequire.style.display = "none";
+}
 	
 passwordInput.onkeyup = function()
 {
