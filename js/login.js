@@ -154,40 +154,47 @@ function editUser(button)
                     `;
 }
 
-// NOTE: need to add pop up window that says are you sure.
 function deleteUser (button)
 {
-    let thisRow = button.closest("tr");
-    let tableCells = thisRow.getElementsByTagName("td");
-    let firstName = tableCells[0].innerText;
-    let lastName = tableCells[1].innerText;
-    let userID = userId;
-
-    let tmp = 
+    let confirmed = window.confirm("Do you want to delete this contact?");
+    if(confirmed)
     {
-        firstName : firstName,
-        lastName : lastName,
-        userID : userID
-    }
+        let thisRow = button.closest("tr");
+        let tableCells = thisRow.getElementsByTagName("td");
+        let firstName = tableCells[0].innerText;
+        let lastName = tableCells[1].innerText;
+        let userID = userId;
 
-    let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + "/DeleteContacts." + extension;
-    let xhr = new XMLHttpRequest("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    try
-    {
-        xhr.onreadystatechange = function()
+        let tmp = 
         {
-            if (this.readyState == 4 && this.status == 200)
+            firstName : firstName,
+            lastName : lastName,
+            userID : userID
+        }
+
+        let jsonPayload = JSON.stringify(tmp);
+        let url = urlBase + "/DeleteContacts." + extension;
+        let xhr = new XMLHttpRequest("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try
+        {
+            xhr.onreadystatechange = function()
             {
-                deleteRow(button);
-            }
-        };
-        xhr.send(jsonPayload);
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    deleteRow(button);
+                }
+            };
+            xhr.send(jsonPayload);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
     }
-    catch(err)
+    else
     {
-        console.log(err);
+        console.log("Deletion canceled.");
     }
 }
 
