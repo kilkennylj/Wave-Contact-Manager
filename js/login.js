@@ -1,7 +1,7 @@
 const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
-let userId=0;
+let UserID_Global = 0;
 
 function doLogin() {
     
@@ -27,9 +27,9 @@ function doLogin() {
             if(this.readyState == 4 && this.status == 200)
             {
                 let jsonObject = JSON.parse(xhr.responseText);
-                userId = jsonObject.id;
+                UserID_Global = jsonObject.id;
 
-                if(userId < 1)
+                if(UserID_Global < 1)
                 {
                     document.getElementById("loginResult").innerHTML = "Incorrect password or user";
                     return;
@@ -68,6 +68,38 @@ function createRow()
         document.getElementById("tableBody").appendChild(newRow);
 }
 
+function getContactID(LastName)
+{
+    let UserId = UserID_Global;
+    let Search = LastName;
+    let url = urlBase + "/SearchContacts." + extension;
+
+    let tmp = {UserId : UserId, Search : Search};
+    let jsonPayload = JSON.stringify(tmp);
+
+    let xhr = new XMLHttpRequest("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    let contactID;
+    try
+    {
+        xhr.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                let jsonObject = JSON.parse(xhr.responseText);
+                contactID = jsonObject[0].ID;
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+
+    return contactID;
+}
+
 function saveUser(button, request)
 {
     let thisRow = button.closest("tr");
@@ -76,34 +108,41 @@ function saveUser(button, request)
     let LastName = tableCells[1].innerText;
     let Phone = tableCells[2].innerText;
     let Email = tableCells[3].innerText;
-    let UserID = userId; //Set on login. Might not work needs fixing/testing
 
-    //Preparing for API
-
-    let tmp = {
-        FirstName:FirstName,
-        LastName:LastName,
-        Phone:Phone,
-        Email:Email,
-        UserID:UserID //Testing needs to be done here, not sure if it works
-    }
-
-    let jsonPayload = JSON.stringify(tmp);
     let url;
+    let tmp;
     //Saving edits to existing user
     if(request === "SaveEdit")
     {
         url = urlBase + "/UpdateContacts." + extension;
+        let ID = parseInt(getContactID(LastName));
+        tmp = {
+            FirstName:FirstName,
+            LastName:LastName,
+            Phone:Phone,
+            Email:Email,
+            ID:ID 
+        }
     }
     else if(request === "SaveNew")
     {
         url = urlBase + "/AddContacts." + extension;
+        let UserID = UserID_Global;
+        tmp = {
+            FirstName:FirstName,
+            LastName:LastName,
+            Phone:Phone,
+            Email:Email,
+            UserID:UserID 
+        }
     }
     else
     {
         console.log("HTML ERROR: Invalid or No request given to save function");
         return;
     }
+
+    let jsonPayload = JSON.stringify(tmp);
     let xhr = new XMLHttpRequest("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try
@@ -163,13 +202,13 @@ function deleteUser (button)
         let tableCells = thisRow.getElementsByTagName("td");
         let firstName = tableCells[0].innerText;
         let lastName = tableCells[1].innerText;
-        let userID = userId;
+        let UserID = UserID_Global;
 
         let tmp = 
         {
             firstName : firstName,
             lastName : lastName,
-            userID : userID
+            UserID : UserID
         }
 
         let jsonPayload = JSON.stringify(tmp);
@@ -237,9 +276,9 @@ function cancelEdit(button, request)
 function searchContacts()
 {
     let Search = document.getElementById("searchQuery").value;
-    let userID = userId;
+    let UserID = UserID_Global;
 
-    let tmp = {Search : Search, userID : userID};
+    let tmp = {UserId : UserId, Search : Search};
     let jsonPayload = JSON.stringify(tmp);
 
     let url = urlBase + '/SearchContacts.' + extension;
@@ -289,6 +328,6 @@ function updateTable(data)
 
 function logout()
 {
-    userId = 0;
+    UserID_Global = 0;
     window.location.href = "index.html"
 }
