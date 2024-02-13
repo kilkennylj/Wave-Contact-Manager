@@ -13,7 +13,22 @@ body
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: url('images/background.gif') center/cover no-repeat fixed;
+    background: linear-gradient(-45deg, #5b94ff, #0e29f1, #5b94ff, #0e29f1);
+    background-size: 400% 100%;
+    animation: linear-gradient 30s infinite linear;
+}
+
+/* Background animation */
+@keyframes linear-gradient
+{
+    0%
+    {
+        background-position: 0 0;
+    }
+    100%
+    {
+        background-position: 100% 0;
+    }
 }
 
 /* Wrapper */
