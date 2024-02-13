@@ -5,6 +5,8 @@ let UserID_Global = 0;
 
 function doLogin() {
     
+    UserID_Global = 0;
+
     document.getElementById("loginResult").innerHTML = "Logging in...";
 
     let login = document.getElementById("username").value;
