@@ -290,18 +290,25 @@ function searchContacts() {
     }
 }
 
-function updateTable(data) {    
+function updateTable(data) 
+{    
     let table = document.getElementById("contactTable");
     let tbody = table.getElementsByTagName("tbody")[0];
     tbody.innerHTML = ""; //Clear table
 
-    for(var i = 0; i < data.length; i++)
+    for(var i = 0; i < data.results.length; i++)
     {
+        let res = data.results[i];
         let row = document.createElement("tr");
-        let inner = data[i];
-        for (var j = 0; j < keys.length - 1; j++) {
+        for (var key in res)
+        {
+            if (key === "UserId")
+            {
+                break;
+            } 
+
             let cell = document.createElement("td");
-            cell.textContent = inner[j];
+            cell.textContent = res[key];
             row.appendChild(cell);
         }
         let buttonCell = document.createElement("td");
@@ -311,6 +318,7 @@ function updateTable(data) {
         tbody.appendChild(row);
     }
 }
+
 
 function logout() {
     UserID_Global = 0;
