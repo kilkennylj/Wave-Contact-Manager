@@ -99,7 +99,7 @@ function getContactID(LastName) {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
-                contactID = jsonObject[0]["ID"];
+                contactID = jsonObject.results[0]["ID"];
             }
         };
         xhr.send(jsonPayload);
