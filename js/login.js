@@ -290,16 +290,15 @@ function searchContacts() {
     }
 }
 
-function updateTable(data) {
-    data = JSON.parse(data);
-    
+function updateTable(data) {    
     let table = document.getElementById("contactTable");
     let tbody = table.getElementsByTagName("tbody");
     tbody.innerHTML = ""; //Clear table
 
-    data.forEach((item) => {
+    for(var i = 0; i < data.length; i++)
+    {
         let row = document.createElement("tr");
-        let keys = Object.keys(item);
+        let keys = data[i];
         for (var i = 0; i < keys.length - 1; i++) {
             let cell = document.createElement("td");
             cell.textContent = item[keys[i]];
@@ -310,7 +309,7 @@ function updateTable(data) {
             <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>`;
         row.appendChild(buttonCell);
         tableBody.appendChild(row);
-    });
+    }
 }
 
 function logout() {
