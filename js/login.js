@@ -292,23 +292,23 @@ function searchContacts() {
 
 function updateTable(data) {    
     let table = document.getElementById("contactTable");
-    let tbody = table.getElementsByTagName("tbody");
+    let tbody = table.getElementsByTagName("tbody")[0];
     tbody.innerHTML = ""; //Clear table
 
     for(var i = 0; i < data.length; i++)
     {
         let row = document.createElement("tr");
-        let keys = data[i];
-        for (var i = 0; i < keys.length - 1; i++) {
+        let inner = data[i];
+        for (var j = 0; j < keys.length - 1; j++) {
             let cell = document.createElement("td");
-            cell.textContent = item[keys[i]];
+            cell.textContent = inner[j];
             row.appendChild(cell);
         }
         let buttonCell = document.createElement("td");
         buttonCell.innerHTML = `<button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
             <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>`;
         row.appendChild(buttonCell);
-        tableBody.appendChild(row);
+        tbody.appendChild(row);
     }
 }
 
