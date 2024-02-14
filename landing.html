@@ -8,10 +8,17 @@
                 align-items: center;
                 justify-content: center;
                 min-height: 100vh;
+                background: linear-gradient(-45deg, #5b94ff, #0e29f1, #5b94ff, #0e29f1);
+                background-size: 400% 100%;
+                animation: linear-gradient 30s infinite linear;
             }
             main
             {
                 width: 100vh;
+                height: 75vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 font-family: "Roboto";
             }
             h1
@@ -26,11 +33,11 @@
             }
             .container
             {
-                display: flex;
+                display: block;
                 justify-content: center;
                 align-items: center;
                 width: 90%;
-                height: 40%;
+                height: fit-content;
                 padding: 20px;
                 border-radius: 8px;
                 background-color: #f2f2f2;
@@ -59,6 +66,10 @@
             {
                 padding: 8px;
             }
+            tr:nth-of-type(2n)
+            {
+                background-color: rgb(236, 236, 236);
+            }
             th
             {
                 background-color: #263dd3;
@@ -82,6 +93,46 @@
             {
                 width: 25%;
             }
+            td.button
+            {
+                display: flex;
+                align-content: left;
+            }
+            .searchQuery
+            {
+                width: 70%;
+            }
+            button
+            {
+                font-family: 'Roboto';
+                font-weight: 300;
+                background-color: rgb(223, 223, 223);
+                border-color: #263dd3;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 4px;
+            }
+            button.addBtn
+            {
+                margin-left: 6px;
+                background-color: #263dd3;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                height: 30px;
+            }
+            button.logoutBtn
+            {
+                background: #f18f01;
+                height: 30px;
+                border: none;
+                border-radius: 4px;
+                color: white;
+            }
+            button.logoutBtn:hover
+            {
+                background: #e68e0b;
+            }
         </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,12 +142,15 @@
     </head>
     <body>
         <main>
-            <h1>Wave</h1>
-            <div class="search">
-                <input  type="text" id="searchQuery" class="searchQuery" oninput="searchContacts()" placeholder="Search your contacts">
-            </div>
-            <br>
             <div class="container table">
+                <div class="top table">
+                    <h1>Wave</h1>
+                    <div class="search">
+                    <input  type="text" id="searchQuery" class="searchQuery" oninput="searchContacts()" placeholder="Search your contacts">                
+                    <button class="addBtn" id="addBtn" onclick="createRow()">Add new contact</button>
+                    </div>
+                </div>
+                <br>
                 <table class="contactTable" id="contactTable">
                     <thead>
                         <tr class="headRow" id="headRow">
@@ -121,11 +175,10 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <br>
-            <div class="bottom">
-                <button id="addBtn" onclick="createRow()">Add</button>
-                <button onclick="logout()">Log Out</button>
+                <br>
+                <div class="bottom">
+                    <button id="logoutBtn" class="logoutBtn" onclick="logout()">Log Out</button>
+                </div>
             </div>
         </main>
     </body>
