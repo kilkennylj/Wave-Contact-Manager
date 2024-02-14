@@ -302,7 +302,7 @@ function updateTable(data)
         let row = document.createElement("tr");
         for (var key in res)
         {
-            if (key === "UserId")
+            if (key === "UserID")
             {
                 break;
             } 
