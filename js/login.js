@@ -295,7 +295,7 @@ function updateTable(data) {
     let tbody = table.getElementsByTagName("tbody");
     tbody.innerHTML = ""; //Clear table
 
-    data.array.forEach(item => {
+    data.forEach((item) => {
         let row = document.createElement("tr");
         let keys = Object.keys(item);
         for (var i = 0; i < keys.length - 1; i++) {
