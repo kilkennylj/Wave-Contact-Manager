@@ -76,77 +76,58 @@ function createRow() {
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
-                <button class="saveBtn" id="saveBtn" onclick="saveUser(this, 'SaveNew')">Save</button>
+                <button class="saveBtn" id="saveBtn" onclick="saveUser(this)">Save</button>
                 <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelNew')">Cancel</button>
             </td> 
         `;
     document.getElementById("tableBody").appendChild(newRow);
 }
 
-function getContactID(LastName) {
-    let UserId = UserID_Global;
-    let Search = LastName;
-    let url = urlBase + "/SearchContacts." + extension;
+// function getContactID(LastName) {
+//     let UserId = UserID_Global;
+//     let Search = LastName;
+//     let url = urlBase + "/SearchContacts." + extension;
 
-    let tmp = { UserId: UserId, Search: Search };
-    let jsonPayload = JSON.stringify(tmp);
+//     let tmp = { UserId: UserId, Search: Search };
+//     let jsonPayload = JSON.stringify(tmp);
 
-    let xhr = new XMLHttpRequest("POST", url, true);
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    let contactID;
-    try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let jsonObject = JSON.parse(xhr.responseText);
-                contactID = jsonObject.results[0]["ID"];
-            }
-        };
-        xhr.send(jsonPayload);
-    }
-    catch (err) {
-        console.log(err);
-    }
+//     let xhr = new XMLHttpRequest("POST", url, true);
+//     xhr.open("POST", url, true);
+//     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+//     let contactID;
+//     try {
+//         xhr.onreadystatechange = function () {
+//             if (this.readyState == 4 && this.status == 200) {
+//                 let jsonObject = JSON.parse(xhr.responseText);
+//                 contactID = jsonObject.results[0]["ID"];
+//             }
+//         };
+//         xhr.send(jsonPayload);
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
 
-    return contactID;
-}
+//     return contactID;
+// }
 
-function saveUser(button, request) {
+function saveEdit(button)
+{
     let thisRow = button.closest("tr");
     let tableCells = thisRow.getElementsByTagName("td");
     let firstName = tableCells[0].innerText;  //Get value of columns
     let lastName = tableCells[1].innerText;
     let phone = tableCells[2].innerText;
     let email = tableCells[3].innerText;
+    let ID = tableCells[4].innerText;
 
-    let url;
-    let tmp;
-    //Saving edits to existing user
-    if (request === "SaveEdit") {
-        url = urlBase + "/UpdateContacts." + extension;
-        let ID = parseInt(getContactID(lastName));
-        tmp = {
-            ID: ID,
-            FirstName: firstName,
-            LastName: lastName,
-            Phone: phone,
-            Email: email
-        }
-    }
-    else if (request === "SaveNew") {
-        url = urlBase + "/AddContacts." + extension;
-        let userID = UserID_Global;
-        tmp = {
-            firstName: firstName,
-            lastName: lastName,
-            phone: phone,
-            email: email,
-            userID: userID
-        }
-    }
-    else {
-        console.log("HTML ERROR: Invalid or No request given to save function");
-        return;
+    let url = urlBase + "/UpdateContacts." + extension;
+    let tmp = {
+        ID: ID,
+        FirstName: firstName,
+        LastName: lastName,
+        Phone: phone,
+        Email: email
     }
 
     let jsonPayload = JSON.stringify(tmp);
@@ -161,6 +142,57 @@ function saveUser(button, request) {
                 <td class="lName" id="lName">`+ lastName + `</td>
                 <td class="phone" id="phone">`+ phone + `</td>
                 <td class="email" id="email">`+ email + `</td>
+                <td class="ID" id="ID" style="display:none">`+ ID + `</td>
+                <td class="button" id="button" type="button">
+                    <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
+                    <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
+                </td> 
+                `;
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+function saveUser(button) {
+    let thisRow = button.closest("tr");
+    let tableCells = thisRow.getElementsByTagName("td");
+    let firstName = tableCells[0].innerText;  //Get value of columns
+    let lastName = tableCells[1].innerText;
+    let phone = tableCells[2].innerText;
+    let email = tableCells[3].innerText;
+    let ID;
+
+    let url = urlBase + "/AddContacts." + extension;
+    let userID= UserID_Global;
+    let tmp = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        userID: userID
+    }
+    
+    let jsonPayload = JSON.stringify(tmp);
+    let xhr = new XMLHttpRequest("POST", url, true);
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //GET CONTACT ID FROM RETURN
+                let jsonObject = JSON.parse(xhr.responseText);
+                ID = jsonObject.ID;
+                
+                thisRow.innerHTML = `
+                <td class="fName" id="fName">`+ firstName + `</td>
+                <td class="lName" id="lName">`+ lastName + `</td>
+                <td class="phone" id="phone">`+ phone + `</td>
+                <td class="email" id="email">`+ email + `</td>
+                <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                 <td class="button" id="button" type="button">
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
                     <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
@@ -183,14 +215,16 @@ function editUser(button) {
     let LastName = tableCells[1].innerText;
     let Phone = tableCells[2].innerText;
     let Email = tableCells[3].innerText;
+    let ID = tableCells[4].innerText;
 
     thisRow.innerHTML = `
                     <td class="fName" id="fName" contenteditable="true">`+ FirstName + `</td>
                     <td class="lName" id="lName" contenteditable="true">`+ LastName + `</td>
                     <td class="phone" id="phone" contenteditable="true">`+ Phone + `</td>
                     <td class="email" id="email" contenteditable="true">`+ Email + `</td>
+                    <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                     <td class="button" id="button" type="button">
-                        <button class="editBtn" id="editBtn" onclick="saveUser(this, 'SaveEdit')">Save</button>
+                        <button class="editBtn" id="editBtn" onclick="saveEdit(this)">Save</button>
                         <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelExists')">Cancel</button>
                     </td> 
                     `;
@@ -249,11 +283,13 @@ function cancelEdit(button, request) {
         let LastName = tableCells[1].innerText;
         let Phone = tableCells[2].innerText;
         let Email = tableCells[3].innerText;
+        let ID = tableCells[4].innerText;
         thisRow.innerHTML = `
                 <td class="fName" id="fName">`+ FirstName + `</td>
                 <td class="lName" id="lName">`+ LastName + `</td>
                 <td class="phone" id="phone">`+ Phone + `</td>
                 <td class="email" id="email">`+ Email + `</td>
+                <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                 <td class="button" id="button" type="button">
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
                     <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
@@ -302,14 +338,20 @@ function updateTable(data)
         let row = document.createElement("tr");
         for (var key in res)
         {
-            if (key === "UserID")
-            {
-                break;
-            } 
-
             let cell = document.createElement("td");
-            cell.textContent = res[key];
-            row.appendChild(cell);
+            if (key === "ID")
+            {
+                cell.textContent = res[key];
+                cell.style.display = "none";
+                cell.setAttribute("id", "ID");
+                cell.setAttribute("class", "ID");
+                row.appendChild(cell);
+            } 
+            else if(key != "UserID")
+            {
+                cell.textContent = res[key];
+                row.appendChild(cell);
+            }  
         }
         let buttonCell = document.createElement("td");
         buttonCell.innerHTML = `<button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
