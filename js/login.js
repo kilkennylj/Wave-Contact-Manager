@@ -76,6 +76,7 @@ function createRow() {
             <td class="phone" id="phone" contenteditable="true">Phone</td>
             <td class="email" id="email" contenteditable="true">Email</td>
             <td class="button" id="button" type="button">
+                <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                 <button class="saveBtn" id="saveBtn" onclick="saveUser(this)">Save</button>
                 <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelNew')">Cancel</button>
             </td> 
@@ -144,6 +145,7 @@ function saveEdit(button)
                 <td class="email" id="email">`+ email + `</td>
                 <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                 <td class="button" id="button" type="button">
+                    <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
                     <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
                 </td> 
@@ -194,6 +196,7 @@ function saveUser(button) {
                 <td class="email" id="email">`+ email + `</td>
                 <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                 <td class="button" id="button" type="button">
+                    <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
                     <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
                 </td> 
@@ -224,6 +227,7 @@ function editUser(button) {
                     <td class="email" id="email" contenteditable="true">`+ Email + `</td>
                     <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                     <td class="button" id="button" type="button">
+                        <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                         <button class="editBtn" id="editBtn" onclick="saveEdit(this)">Save</button>
                         <button class="cancelBtn" id="cancelBtn" onclick="cancelEdit(this, 'CancelExists')">Cancel</button>
                     </td> 
@@ -291,6 +295,7 @@ function cancelEdit(button, request) {
                 <td class="email" id="email">`+ Email + `</td>
                 <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                 <td class="button" id="button" type="button">
+                    <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                     <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
                     <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
                 </td> 
@@ -354,7 +359,8 @@ function updateTable(data)
             }  
         }
         let buttonCell = document.createElement("td");
-        buttonCell.innerHTML = `<button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
+        buttonCell.innerHTML = `<button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
+            <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
             <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>`;
         row.appendChild(buttonCell);
         tbody.appendChild(row);
@@ -366,4 +372,12 @@ function logout() {
     UserID_Global = 0;
     document.cookie = "UserID_Global = 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href = "index.html"
+}
+
+function waveUser(button)
+{
+    let thisRow = button.closest("tr");
+    let tableCells = thisRow.getElementsByTagName("td");
+    let toEmail = tableCells[3].innerText;
+    window.open("mailto:"+toEmail);
 }
