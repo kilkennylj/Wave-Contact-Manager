@@ -291,6 +291,8 @@ function searchContacts() {
 }
 
 function updateTable(data) {
+    data = JSON.parse(data);
+    
     let table = document.getElementById("contactTable");
     let tbody = table.getElementsByTagName("tbody");
     tbody.innerHTML = ""; //Clear table
