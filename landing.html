@@ -2,85 +2,113 @@
     <head>
         <title>Surf the Wave</title>
         <style>
+            /* Page */
+            *
+            {
+                box-sizing: border-box;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            /* Body */
             body
             {
                 display: flex;
-                align-items: center;
                 justify-content: center;
-                min-height: 100vh;
+                font-family: 'Roboto';
             }
-            main
-            {
-                width: 100vh;
-                font-family: "Roboto";
-            }
+
             h1
             {
-                display: flex;
-                justify-content: center;
-                padding-bottom: 20px;
-                font-size: 52px;
                 font-family: 'Dancing Script';
                 font-weight: bolder;
+                font-size: 60px;
                 color: #263dd3;
+                padding-top: 2rem;
             }
-            .container
+
+            /* Top */
+            .top
             {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 90%;
-                height: 40%;
-                padding: 20px;
-                border-radius: 8px;
-                background-color: #f2f2f2;
+                padding-top: 1rem;
             }
-            .search 
+
+            .top input
             {
-                display: flex;
-                justify-content: center;
+                outline: none;
+                border: 1px solid #000000;
+                border-radius: 4px;
+                padding: 10px;
+                font-size: 15px;
             }
+
+            .top button
+            {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            /* Table */
             table
             {
-                background-color: #ffffff;
-                width: 100%;
-                border: 2px solid;
-                border-color: #263dd3;
                 border-collapse: collapse;
-                padding: 20px;
-                border-radius: 8px;
             }
-            tbody 
+
+            tr
             {
-                display: table-row-group;
-                vertical-align: middle;
+                border-radius: 4px;
             }
-            tr, td
+
+            tr:nth-of-type(2n)
             {
-                padding: 8px;
+                background-color: lightgray;
             }
+            
+            th, td
+            {
+                padding: 10px;
+            }
+
             th
             {
-                background-color: #263dd3;
-                color: white;
                 text-align: left;
-                padding: 8px;
+                color: white;
+                background-color: #263dd3;
             }
+
+            /* Heading Spacing */
             th.headFName
             {
-                width: 24%;
+                padding-right: 5rem;
             }
+
             th.headLName
             {
-                width: 24%;
+                padding-right: 5rem;
             }
+
             th.headPhone
             {
-                width: 15%;
+                padding-right: 7rem;
             }
+
             th.headEmail
             {
-                width: 25%;
+                padding-right: 7rem;
+            }
+
+            /* Bottom */
+            .bottom
+            {
+                display: flex;
+                padding-top: 1rem;
+            }
+
+            .bottom button
+            {
+                padding: 10px;
+                cursor: pointer
             }
         </style>
         <meta charset="UTF-8">
@@ -91,11 +119,13 @@
     <body>
         <main>
             <h1>Wave</h1>
-            <div class="search">
-                <input  type="text" id="searchQuery" placeholder="Search by... (?)">
+            <div class="top">
+                <input type="text" id="searchQuery" placeholder="Search by... (?)">
+                <button id="searchBtn">Search</button>
+                <button id="addBtn" onclick="createRow()">+Add</button>
             </div>
             <br>
-            <div class="container table">
+            <div class="table-container">
                 <table class="contactTable" id="contactTable">
                     <tbody>
                         <tr class="headRow" id="headRow">
@@ -111,8 +141,18 @@
                             <td id="testPhone" type="Phone">123-456-7890</td>
                             <td id="testEmail" type="Email">john.doe@mail.com</td>
                             <td id="testButton" type="button">
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button id="editBtn" onclick="editUser(this)">Edit</button>
+                                <button id="delBtn" onclick="deleteUser(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="testRow">
+                            <td id="testFName" type="text">John</td>
+                            <td id="testLName" type="text">Doe</td>
+                            <td id="testPhone" type="Phone">123-456-7890</td>
+                            <td id="testEmail" type="Email">john.doe@mail.com</td>
+                            <td id="testButton" type="button">
+                                <button id="editBtn" onclick="editUser(this)">Edit</button>
+                                <button id="delBtn" onclick="deleteUser(this)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -120,8 +160,7 @@
             </div>
             <br>
             <div class="bottom">
-                <button>Add</button>
-                <button>Log Out</button>
+                <button id="logoutBtn" onclick="logout()">Log Out</button>
             </div>
         </main>
     </body>
