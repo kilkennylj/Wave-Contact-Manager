@@ -2,6 +2,77 @@ const urlBase = 'http://cop4331-33.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
+var passwordInput = document.getElementById("pword");
+var passwordRequire = document.getElementById("password-require");
+var passwordRequireItems = document.getElementsByClassName("password-require-item");
+var satisfy = 0;
+	
+passwordInput.onkeyup = function()
+{
+	// Check uppercase
+	let uppercaseRegex = /[A-Z]/g;
+	if (passwordInput.value.match(uppercaseRegex))
+	{
+		passwordRequireItems[0].classList.remove("invalid");
+		passwordRequireItems[0].classList.add("valid");
+	}
+	else
+	{
+		passwordRequireItems[0].classList.remove("valid");
+		passwordRequireItems[0].classList.add("invalid");
+	}
+	
+	// Check lowercase
+	let lowercaseRegex = /[a-z]/g;
+	if (passwordInput.value.match(lowercaseRegex))
+	{
+		passwordRequireItems[1].classList.remove("invalid");
+		passwordRequireItems[1].classList.add("valid");
+	}
+	else
+	{
+		passwordRequireItems[1].classList.remove("valid");
+		passwordRequireItems[1].classList.add("invalid");
+	}
+
+	// Check number
+	let numbersRegex = /[0-9]/g;
+	if (passwordInput.value.match(numbersRegex))
+	{
+		passwordRequireItems[2].classList.remove("invalid");
+		passwordRequireItems[2].classList.add("valid");
+	}
+	else
+	{
+		passwordRequireItems[2].classList.remove("valid");
+		passwordRequireItems[2].classList.add("invalid");
+	}
+
+	// Check special
+	let specialRegex = /[-!$%^&*()_+|~=`{}\[\]:\/;<>?,.@#]/g;
+	if (passwordInput.value.match(specialRegex))
+	{
+		passwordRequireItems[3].classList.remove("invalid");
+		passwordRequireItems[3].classList.add("valid");
+	}
+	else
+	{
+		passwordRequireItems[3].classList.remove("valid");
+		passwordRequireItems[3].classList.add("invalid");
+	}
+
+	// Check length
+	if (passwordInput.value.length >= 8)
+	{
+		passwordRequireItems[4].classList.remove("invalid");
+		passwordRequireItems[4].classList.add("valid");
+	}
+	else
+	{
+		passwordRequireItems[4].classList.remove("valid");
+		passwordRequireItems[4].classList.add("invalid");
+	}
+}
 
 function doRegister()
 {
@@ -44,5 +115,21 @@ function doRegister()
 	catch(err)
 	{
 		document.getElementById("registerresult").innerHTML = err.message;
+	}
+}
+
+function doValidate()
+{
+	if(document.getElementById("fname").value != "" &&
+	document.getElementById("lname").value != "" &&
+	document.getElementById("uname").value != "" &&
+	document.getElementById("pword").value != "" &&
+	passwordRequireItems[0].classList.contains("valid") &&
+	passwordRequireItems[1].classList.contains("valid") &&
+	passwordRequireItems[2].classList.contains("valid") &&
+	passwordRequireItems[3].classList.contains("valid") &&
+	passwordRequireItems[4].classList.contains("valid"))
+	{
+		doRegister();
 	}
 }

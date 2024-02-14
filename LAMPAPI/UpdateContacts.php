@@ -3,7 +3,7 @@
 $inData = getRequestInfo();
 
 // Extracting data from the input
-$id = $inData["UserID"];
+$id = $inData["ID"];
 $firstName = $inData["FirstName"];
 $lastName = $inData["LastName"];
 $phoneNumber = $inData["Phone"];
