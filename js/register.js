@@ -5,6 +5,9 @@ let userId = 0;
 var passwordInput = document.getElementById("pword");
 var passwordRequire = document.getElementById("password-require");
 var passwordRequireItems = document.getElementsByClassName("password-require-item");
+var fieldInput = document.getElementById("form");
+var inputFields = document.getElementsByClassName("input-field");
+var errorMessage = document.getElementById("error-message");
 var satisfy = 0;
 	
 passwordInput.onkeyup = function()
@@ -74,6 +77,87 @@ passwordInput.onkeyup = function()
 	}
 }
 
+fieldInput.onkeyup = function()
+{
+	if(document.getElementById("fname").value != "")
+	{
+		inputFields[0].classList.remove("empty");
+	}
+	if(document.getElementById("lname").value != "")
+	{
+		inputFields[1].classList.remove("empty");
+	}
+	if(document.getElementById("uname").value != "")
+	{
+		inputFields[2].classList.remove("empty");
+	}
+	if(document.getElementById("pword").value != "")
+	{
+		inputFields[3].classList.remove("empty");
+	}
+	if(document.getElementById("fname").value != "" &&
+	document.getElementById("lname").value != "" &&
+	document.getElementById("uname").value != "" &&
+	document.getElementById("pword").value != "")
+	{
+		errorMessage.setAttribute("hidden", true);
+	}
+}
+
+function doError()
+{
+	// Check first name
+	if(document.getElementById("fname").value.trim() == "")
+	{
+		inputFields[0].classList.remove("filled");
+		inputFields[0].classList.add("empty");
+	}
+	else
+	{
+		inputFields[0].classList.remove("empty");
+		inputFields[0].classList.add("filled");
+	}
+
+	// Check last name
+	if(document.getElementById("lname").value.trim() == "")
+	{
+		inputFields[1].classList.remove("filled");
+		inputFields[1].classList.add("empty");
+	}
+	else
+	{
+		inputFields[1].classList.remove("empty");
+		inputFields[1].classList.add("filled");
+	}
+
+	// Check username
+	if(document.getElementById("uname").value.trim() == "")
+	{
+		inputFields[2].classList.remove("filled");
+		inputFields[2].classList.add("empty");
+	}
+	else
+	{
+		inputFields[2].classList.remove("empty");
+		inputFields[2].classList.add("filled");
+	}
+
+	// Check password
+	if(document.getElementById("pword").value.trim() == "")
+	{
+		inputFields[3].classList.remove("filled");
+		inputFields[3].classList.add("empty");
+	}
+	else
+	{
+		inputFields[3].classList.remove("empty");
+		inputFields[3].classList.add("filled");
+	}
+
+	errorMessage.removeAttribute("hidden");
+	errorMessage.innerHTML = "* Fill all required fields!";
+}
+
 function doRegister()
 {
 	let firstName = document.getElementById("fname").value;
@@ -81,7 +165,7 @@ function doRegister()
 	let login = document.getElementById("uname").value;
 	let password = document.getElementById("pword").value;
 	
-	document.getElementById("registerresult").innerHTML = "";
+	document.getElementById("registerresult").innerHTML = "Registering...";
 
 	let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
 	let jsonPayload = JSON.stringify( tmp );
@@ -131,5 +215,9 @@ function doValidate()
 	passwordRequireItems[4].classList.contains("valid"))
 	{
 		doRegister();
+	}
+	else
+	{
+		doError();
 	}
 }

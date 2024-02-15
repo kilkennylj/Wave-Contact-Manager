@@ -34,6 +34,7 @@ body
 /* Wrapper */
 .container
 {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 450px;
@@ -84,11 +85,32 @@ input:focus
     transition: 0.1s linear;
 }
 
+.filled
+{
+    border: 1px solid #000000;
+}
+
+.empty
+{
+    border: 1px solid red;
+}
+
+
+#error-message
+{
+    position: absolute;
+    top: 59%;
+    left: 36%;
+    color: red;
+    font-family: 'Roboto';
+}
+
 /* Password Requirements */
 #password-require
 {
     padding-left: 5px;
     padding-bottom: 10px;
+    padding-top: 10px;
     font-family: 'Roboto';
 }
 
