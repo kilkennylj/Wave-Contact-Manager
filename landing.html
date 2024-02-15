@@ -121,6 +121,10 @@
                 border-radius: 4px;
                 height: 30px;
             }
+            button.addBtn:hover
+            {
+                background: #394abd;
+            }
             button.logoutBtn
             {
                 background: #f18f01;
@@ -162,17 +166,6 @@
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="tableBody">
-                        <tr>
-                            <td class="fName" id="fName" type="text">THIS IS A TEST USER</td>
-                            <td class="lName" id="lName" type="text">DOES NOT EXIST</td>
-                            <td class="phone" id="phone" type="Phone">IN DATABASE</td>
-                            <td class="email" id="email" type="Email">john.doe@mail.com</td>
-                            <td class="button" id="button" type="button">
-                                <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
-                                <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
-                                <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <br>
