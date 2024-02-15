@@ -71,10 +71,10 @@ function saveCookie()
 function createRow() {
     let newRow = document.createElement('tr');
     newRow.innerHTML = `
-            <td class="fName" id="fName" contenteditable="true">First Name</td>
-            <td class="lName" id="lName" contenteditable="true">Last Name</td>
-            <td class="phone" id="phone" contenteditable="true">Phone</td>
-            <td class="email" id="email" contenteditable="true">Email</td>
+            <td class="fName" id="fName" contenteditable="true" style="color:#746F72;font-style:italic">First Name</td>
+            <td class="lName" id="lName" contenteditable="true" style="color:#746F72;font-style:italic">Last Name</td>
+            <td class="phone" id="phone" contenteditable="true" style="color:#746F72;font-style:italic">Phone</td>
+            <td class="email" id="email" contenteditable="true" style="color:#746F72;font-style:italic">Email</td>
             <td class="button" id="button" type="button">
                 <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
                 <button class="saveBtn" id="saveBtn" onclick="saveUser(this)">Save</button>
@@ -221,10 +221,10 @@ function editUser(button) {
     let ID = tableCells[4].innerText;
 
     thisRow.innerHTML = `
-                    <td class="fName" id="fName" contenteditable="true">`+ FirstName + `</td>
-                    <td class="lName" id="lName" contenteditable="true">`+ LastName + `</td>
-                    <td class="phone" id="phone" contenteditable="true">`+ Phone + `</td>
-                    <td class="email" id="email" contenteditable="true">`+ Email + `</td>
+                    <td class="fName" id="fName" contenteditable="true" style="color:#746F72;font-style:italic">`+ FirstName + `</td>
+                    <td class="lName" id="lName" contenteditable="true" style="color:#746F72;font-style:italic">`+ LastName + `</td>
+                    <td class="phone" id="phone" contenteditable="true" style="color:#746F72;font-style:italic">`+ Phone + `</td>
+                    <td class="email" id="email" contenteditable="true" style="color:#746F72;font-style:italic">`+ Email + `</td>
                     <td class="ID" id="ID" style="display:none">`+ ID + `</td>
                     <td class="button" id="button" type="button">
                         <button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
@@ -359,6 +359,8 @@ function updateTable(data)
             }  
         }
         let buttonCell = document.createElement("td");
+        buttonCell.setAttribute("id", "button");
+        buttonCell.setAttribute("class", "button");
         buttonCell.innerHTML = `<button class="waveBtn" id="waveBtn" onclick="waveUser(this)">👋</button>
             <button class="editBtn" id="editBtn" onclick="editUser(this)">Edit</button>
             <button class="delBtn" id="delBtn" onclick="deleteUser(this)">Delete</button>`;
